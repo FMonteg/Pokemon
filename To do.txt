@@ -1,0 +1,7 @@
+- Reprendre et tester contact_smogon.py pour la récupération automatique des données smogon requises
+- Formater et analyser les données Smogon
+- Lier les deux bases de données pour l'analyse exploratoire
+
+
+
+- Etendre aux générations suivantes ?
