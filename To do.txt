@@ -1,7 +1,11 @@
-- Reprendre et tester contact_smogon.py pour la récupération automatique des données smogon requises
-- Formater et analyser les données Smogon
-- Lier les deux bases de données pour l'analyse exploratoire
+- Finir contact_smogon.py pour la récupération automatique des données smogon requises
+  -> Création des urls avec gestion des dates
+  -> Reprendre les deux fonctions de formatage et sauvegarde des données
 
+- Récupérer un échantillon de données pour pratiquer et estimer l'ampleur de la tâche
+  -> OU gen7 rating0 toutes dates ?
 
+- Lier les deux bases de données (usages smogon et stats pokemon) pour l'analyse exploratoire
 
-- Etendre aux générations suivantes ?
+- Vérifier que les paramètres possibles (gen, rating,...) sont à jour
+  -> Ecrire un readme et commenter contact_smogon pour les procédures de mises à jour ultérieures ?
