@@ -40,6 +40,24 @@ class Contact_Smogon():
                               'doublesou','doublesubers','doublesuu','hackmonscup','linked','mixandmega',
                               'natureswap','stabmons','ultrakalosclassic','vcg2018','vgc2014',
                               'vgc2015','vgc2016','vgc2017','vgc2019','vgc2020']
+        self.possible_date = ['2015-01', '2015-02', '2015-03', '2015-04', '2015-05', '2015-06',
+                              '2015-07', '2015-08', '2015-09', '2015-10', '2015-11', '2015-12',
+                              '2016-01', '2016-02', '2016-03', '2016-04', '2016-05', '2016-06',
+                              '2016-07', '2016-08', '2016-09', '2016-10', '2016-11', '2016-12',
+                              '2017-01', '2017-02', '2017-03', '2017-04', '2017-05', '2017-06',
+                              '2017-07', '2017-08', '2017-09', '2017-10', '2017-11', '2017-12',
+                              '2018-01', '2018-02', '2018-03', '2018-04', '2018-05', '2018-06',
+                              '2018-07', '2018-08', '2018-09', '2018-10', '2018-11', '2018-12',
+                              '2019-01', '2019-02', '2019-03', '2019-04', '2019-05', '2019-06',
+                              '2019-07', '2019-08', '2019-09', '2019-10', '2019-11', '2019-12',
+                              '2020-01', '2020-02', '2020-03', '2020-04', '2020-05', '2020-06',
+                              '2020-07', '2020-08', '2020-09', '2020-10', '2020-11', '2020-12',
+                              '2021-01', '2021-02', '2021-03', '2021-04', '2021-05', '2021-06',
+                              '2021-07', '2021-08', '2021-09', '2021-10', '2021-11', '2021-12',
+                              '2022-01', '2022-02', '2022-03', '2022-04', '2022-05', '2022-06',
+                              '2022-07', '2022-08', '2022-09', '2022-10', '2022-11', '2022-12',
+                              '2023-01', '2023-02', '2023-03', '2023-04', '2023-05', '2023-06',
+                              '2023-07', '2023-08', '2023-09', '2023-10', '2023-11', '2023-12']
 
         pass
     
@@ -76,16 +94,19 @@ class Contact_Smogon():
         folder_path = self.path+folder_name
         if not os.path.exists(folder_path):
             os.makedirs(folder_path)
-        print("Folder {} succesfully created".format(folder_name)
+            print("Folder {} succesfully created".format(folder_name))
         return folder_path
        
               
     def request_data(self, **kwargs):
               
-        dates = kwargs.get('dates', ['2020-05']) #FLAG Temporaire
+        dates = kwargs.get('dates', self.possible_date)
               
-        #Step 1 : créer les URLs FLAG
-              
+        #Step 1 : créer les URLs 
+        urls = []
+        for date in dates:
+            url = 'https://www.smogon.com/stats/'+date+'/'+self.gen+self.tier+'-'+self.rating+'.txt'
+            urls.append(url)
               
         #Step 2 : réclamer les données à Smogon
         for url in urls:
@@ -99,34 +120,36 @@ class Contact_Smogon():
             page = r.text
             src = url.split('/')
             src=src[4:]
-            print(src)
             
             #save files based on unique values.
-            folder_path = self.make_folder('\raw_data')
-            page_path=(folder_path + r'\rawstats_{}_{}').format(src[0],src[1])
-            print(page_path)
+            folder_path = self.make_folder('/raw_data')
+            file_name = r'/rawdata_{}_{}'.format(src[0],src[1])
+            page_path=folder_path + file_name
               
             #save file
             with open(page_path,"w") as f:
                 f.write(page)
                 f.close()
-              
-              
-            #FLAG gérer l'après cette ligne (et donc les deux fonctions qui vont avec)
+            print("File {} succesfully created".format(file_name))
 
             #read file in with readlines(), remove first 5 lists of garbage
             # elements. begin text formatting.
             fobj = open(page_path)
             data_list=Contact_Smogon._remove_formatting(self,fobj)
-            df = Contact_Smogon.create_data_structure(self,data_list=data_list)
-              
+
+            #create dataframe as a .csv
+            folder_path = self.make_folder('/clean_data')
+            file_name = r'/data_{}_{}.csv'.format(src[0],src[1])
+            page_path=folder_path + file_name
+            df = Contact_Smogon.create_data_structure(self,data_list=data_list,file=page_path)
+            print("File {} succesfully created".format(file_name))
               
         return
     
 
     
     #Function to: create data structure
-    def create_data_structure(self,data_list):
+    def create_data_structure(self,data_list,file):
         #key pairs, mirroring the headers in the raw text
         keys=['rank','pokemon','usage_pct','raw_usage','raw_pct','real','real_pct']
 
@@ -142,9 +165,7 @@ class Contact_Smogon():
 
         #make dataframe to save and use for plotting
         df = pd.DataFrame(dict_list)
-        path = os.getcwd()
-        df.to_csv(path + r'\{}_{}_{}{}_{}.csv'.format(
-            self.yyyy,self.mm,self.gen,self.tier,self.rating),index=False)
+        df.to_csv(file,index=False)
 
         return df
 
