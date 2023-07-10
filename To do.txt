@@ -1,4 +1,12 @@
-- Lier les deux bases de données (usages smogon et stats pokemon) pour l'analyse exploratoire
+- Analyse de la database :
+  -> évolution de la fréquence d'usage pour certains pokémon clés (au-dessus d'un certain seuil ?)
+  -> pokémons les plus utilisés chaque mois et/ou en moyenne sur tout la période d'étude
+  -> fréquence des différents types dans le pokédex et pondérée par l'usage
+  -> abilities les plus utilisées (vérifier l'encodage)
+  -> évolution X moyenne au cours du temps, où X = atk, def, sp_atk,... pour voir les profils du metagame (notamment la vitesse !)
+  -> corrélations stats et types
 
 - Vérifier que les paramètres possibles (gen, rating,...) sont à jour
   -> Ecrire un readme et commenter contact_smogon pour les procédures de mises à jour ultérieures ?
+
+- Changer le nom donné aux databases clean par contact_smogon (éviter le .txt.csv)
