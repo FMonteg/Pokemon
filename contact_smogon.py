@@ -139,7 +139,7 @@ class Contact_Smogon():
 
             #create dataframe as a .csv
             folder_path = self.make_folder('/clean_data')
-            file_name = r'/data_{}_{}.csv'.format(src[0],src[1])
+            file_name = r'/data_{}_{}.csv'.format(src[0],src[1][:-4])
             page_path=folder_path + file_name
             df = Contact_Smogon.create_data_structure(self,data_list=data_list,file=page_path)
             print("File {} succesfully created".format(file_name))
