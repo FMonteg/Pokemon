@@ -1,5 +1,7 @@
 - Analyse des types :
-  -> plot simultané de tous les types (penser à check les outliers)
+  -> au moment de la duplication des double-types => diviser les fréquences par 2 ? + vérifier le total qui devrait être 600%, et le normaliser
+  -> plot simultané de tous les types : titres et échelles
+  -> dans le barplot, utiliser les fréquences ?
 
 - Analyse de la database :
   -> évolution de la fréquence d'usage pour certains pokémon clés (au-dessus d'un certain seuil ?)
